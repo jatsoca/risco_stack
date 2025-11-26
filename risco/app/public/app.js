@@ -1,6 +1,5 @@
 const wsStatusEl = document.getElementById('ws-status');
 const panelOnlineEl = document.getElementById('panel-online');
-const modbusInfoEl = document.getElementById('modbus-info');
 const partitionTable = document.querySelector('#partitions tbody');
 const zoneTable = document.querySelector('#zones tbody');
 const zoneFilter = document.getElementById('zone-filter');
@@ -14,6 +13,7 @@ let ws;
 let panelOnline = false;
 
 function setBadge(el, text, cls) {
+  if (!el) return;
   el.textContent = text;
   el.className = `badge ${cls}`;
 }
@@ -28,7 +28,7 @@ async function loadSnapshot() {
     renderPartitions();
     renderZones();
   } catch (e) {
-    console.error(e);
+    console.error('[UI] Error loading snapshot', e);
   }
 }
 
@@ -38,7 +38,10 @@ function connectWS() {
   ws = new WebSocket(wsUrl);
   ws.onopen = () => setBadge(wsStatusEl, 'WS conectado', 'badge ok');
   ws.onclose = () => setBadge(wsStatusEl, 'WS desconectado', 'badge bad');
-  ws.onerror = () => setBadge(wsStatusEl, 'WS error', 'badge bad');
+  ws.onerror = (ev) => {
+    console.error('[UI] WS error', ev);
+    setBadge(wsStatusEl, 'WS error', 'badge bad');
+  };
   ws.onmessage = (ev) => {
     const msg = JSON.parse(ev.data);
     if (msg.type === 'snapshot') {
@@ -59,7 +62,7 @@ function connectWS() {
       renderPanelStatus();
     } else if (msg.type === 'ack') {
       const ok = !!msg.ok;
-      const msgText = msg.message || (ok ? 'Acción ejecutada' : 'Acción rechazada');
+      const msgText = msg.message || (ok ? 'Accion ejecutada' : 'Accion rechazada');
       const title = msg.action === 'bypass' ? 'Bypass' : 'Armado';
       showToast(`${title}: ${msgText}`, ok ? 'ok' : 'bad');
     }
@@ -77,9 +80,23 @@ function renderPartitions() {
     .sort((a, b) => a.id - b.id)
     .forEach((p) => {
       const tr = document.createElement('tr');
-      const badgeCls = p.status === 'disarmed' ? 'pill closed' :
-        p.status === 'armed_home' ? 'pill warn' :
-        p.status === 'armed_away' ? 'pill open' : 'pill';
+      let badgeCls = 'pill';
+      switch (p.status) {
+        case 'disarmed':
+          badgeCls = 'pill closed';
+          break;
+        case 'armed_home':
+          badgeCls = 'pill warn';
+          break;
+        case 'armed_away':
+          badgeCls = 'pill open';
+          break;
+        case 'triggered':
+          badgeCls = 'pill alarm';
+          break;
+        default:
+          badgeCls = 'pill';
+      }
       const readyBadge = p.ready === undefined ? '' :
         `<span class="pill ${p.ready ? 'closed' : 'warn'}" style="margin-left:6px">${p.ready ? 'Ready' : 'NotReady'}</span>`;
       tr.innerHTML = `<td>${p.id}</td><td><span class="${badgeCls}">${p.status}</span>${readyBadge}</td>`;
@@ -135,7 +152,6 @@ zoneFilter.addEventListener('input', renderZones);
 window.addEventListener('DOMContentLoaded', async () => {
   setBadge(wsStatusEl, 'WS conectando...', 'badge warn');
   setBadge(panelOnlineEl, 'Panel offline', 'badge bad');
-  setBadge(modbusInfoEl, 'Modbus TCP activo', 'badge accent2');
   await loadSnapshot();
   connectWS();
 });
@@ -151,3 +167,4 @@ function showToast(text, variant = 'ok') {
     setTimeout(() => el.remove(), 300);
   }, 2500);
 }
+

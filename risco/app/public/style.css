@@ -30,7 +30,7 @@ main {
   padding: 20px;
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
 }
 section {
   background: var(--card);
@@ -64,6 +64,11 @@ table {
   overflow: hidden;
   table-layout: fixed;
 }
+table thead, table tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 th, td {
   padding: 8px 10px;
   border-bottom: 1px solid #1f2937;
@@ -86,16 +91,27 @@ tr:nth-child(even) td { background: #182032; }
 .bad { background: var(--bad); }
 .accent { background: var(--accent); }
 #zones {
-  max-height: 60vh;
+  max-height: 78vh;
   overflow-y: auto;
   display: block;
 }
-#zones th:nth-child(1) { width: 46px; }
-#zones th:nth-child(2) { width: 230px; }
-#zones th:nth-child(3) { width: 90px; }
-#zones th:nth-child(4) { width: 90px; }
-#zones th:nth-child(5) { width: 150px; text-align: center; }
+#zones th:nth-child(1) { width: 48px; }
+#zones th:nth-child(2) { width: 260px; }
+#zones th:nth-child(3) { width: 140px; }
+#zones th:nth-child(4) { width: 110px; }
+#zones th:nth-child(5) { width: 160px; text-align: center; }
 #zones td:last-child { text-align: right; white-space: nowrap; }
+.table-card {
+  max-height: 78vh;
+  overflow-y: auto;
+}
+#partitions {
+  max-height: 78vh;
+  overflow-y: auto;
+  display: block;
+}
+#partitions th:nth-child(1) { width: 50px; }
+#partitions th:nth-child(2) { width: 220px; }
 .btn-cell button {
   padding: 6px 10px;
   font-size: 12px;
@@ -115,6 +131,7 @@ tr:nth-child(even) td { background: #182032; }
 .info-card ul { margin: 6px 0 0 18px; }
 .pill { border-radius: 999px; padding: 4px 10px; font-weight: 600; }
 .open { background: rgba(239, 68, 68, 0.2); color: #fecdd3; }
+.alarm { background: rgba(239, 68, 68, 0.35); color: #fecdd3; }
 .closed { background: rgba(34, 197, 94, 0.2); color: #bbf7d0; }
 .bypass { background: rgba(250, 204, 21, 0.2); color: #fef08a; }
 .toast-container {

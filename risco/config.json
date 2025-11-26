@@ -8,8 +8,8 @@
   
 
   "autoConnect": true,
-  "logLevel": "info",
-  "log": "info",
+  "logLevel": "none",
+  "log": "none",
   "logColorize": true,
   "panelIp": "172.16.84.2",
   "panelPort": 1000,
