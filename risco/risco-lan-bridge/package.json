@@ -1,0 +1,76 @@
+{
+  "name": "@vanackej/risco-lan-bridge",
+  "displayName": "Risco Lan Bridge",
+  "version": "0.13.0",
+  "typings": "dist/index.d.ts",
+  "description": "Risco Lan Bridge allows direct communication with most Risco control panels. It allows you to recover in real time the state of your system and to perform the arming/disarming functions or the inhibition of the detection zones.",
+  "directories": {
+    "doc": "doc",
+    "example": "examples",
+    "lib": "dist"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "publishConfig": {
+    "cache": "~/.npm",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanackej/risco-lan-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vanackej/risco-lan-bridge/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc-watch",
+    "lint": "eslint src --ext .ts",
+    "test": "jest --detectOpenHandles",
+    "testw": "jest --watch",
+    "start": "tsc && node ./dist/main.js",
+    "watch-dist": "onchange -i 'dist/**' -- cp -R dist ../risco-mqtt-local/node_modules/@vanackej/risco-lan-bridge"
+  },
+  "keywords": [
+    "risco",
+    "lan",
+    "alarm",
+    "tcp/ip",
+    "agility",
+    "wicomm",
+    "wicommpro",
+    "lightsys",
+    "prosysplus",
+    "gtplus"
+  ],
+  "author": "Johann Vanackere <johann.vanackere@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/vanackej/risco-lan-bridge#readme",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "jest": "^27.4.5",
+    "onchange": "^7.1.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.2",
+    "tsc-watch": "^4.6.0",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "tiny-typed-emitter": "^2.1.0",
+    "tslib": "^2.3.1"
+  }
+}

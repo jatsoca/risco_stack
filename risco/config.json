@@ -1,0 +1,54 @@
+{
+  "mqtt": {
+    "url": "mqtt://mosquitto:1883",
+    "prefix": "riscopanel",
+    "baseTopic": "riscopanel"
+  },
+  
+  
+
+  "autoConnect": true,
+  "logLevel": "info",
+  "log": "info",
+  "logColorize": true,
+  "panelIp": "172.16.84.2",
+  "panelPort": 1000,
+  "panelPassword": "5678",
+  "panelId": "0001",
+  "socketMode": "direct",
+  "guessPasswordAndPanelId": false,
+  "debug_mqtt": false,
+  "heartbeat_interval_ms": 30000,
+
+
+  "web": {
+    "enable": true,
+    "http_port": 8080,
+    "ws_path": "/ws"
+  },
+  "modbus": {
+    "enable": true,
+    "port": 502,
+    "host": "0.0.0.0"
+  },
+  "riscoLanBridge": {
+    "host": "172.16.84.2",
+    "port": 1000,
+    "password": "5678",
+    "panelId": "0001",
+    "socketMode": "direct"
+  },
+  "panel": {
+    "panelIp": "172.16.84.2",
+    "panelPort": 1000,
+    "panelPassword": 5678,
+    "panelId": "0001",
+    "socketMode": "direct",
+    "watchDogInterval": 5000,
+    "commandsLog": true
+  },
+
+
+  "mqttUrl": "mqtt://mosquitto:1883",
+  "mqtt_prefix": "riscopanel"
+}

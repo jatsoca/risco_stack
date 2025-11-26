@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Risco Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Risco Dashboard</h1>
+    <div id="connection">
+      <span id="ws-status" class="badge gray">WS desconectado</span>
+      <span id="panel-online" class="badge gray">Panel ?</span>
+      <span id="modbus-info" class="badge gray">Modbus TCP</span>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Particiones</h2>
+      <div class="controls">
+        <button data-mode="disarm" class="arm-btn">Desarmar</button>
+        <button data-mode="home" class="arm-btn">Armar Parcial</button>
+        <button data-mode="away" class="arm-btn">Armar Total</button>
+        <input id="partition-id" type="number" min="1" max="32" value="1" />
+      </div>
+      <table id="partitions">
+        <thead>
+          <tr><th>ID</th><th>Estado</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Zonas</h2>
+      <div class="controls">
+        <input id="zone-filter" type="text" placeholder="Filtrar por texto o ID...">
+        <span id="zones-count"></span>
+      </div>
+      <table id="zones">
+        <thead>
+          <tr><th>ID</th><th>Etiqueta</th><th>Abierta</th><th>Bypass</th><th>Acciones</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Modbus</h2>
+      <p>Holding registers (read-only) via Modbus TCP:</p>
+      <ul>
+        <li>Particiones: regs 1-32 (uint16). 0=disarmed, 1=armed (home/away), 2=triggered, 3=Ready, 4=NotReady.</li>
+        <li>Zonas: regs 33-544 (uint16). 0=cerrada, 1=abierta, 2=bypass.</li>
+        <li>Discrete inputs: bits 0-31 = particiones alarmadas (1), bits 32-543 = zonas abiertas (1).</li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="app.js"></script>
+</body>
+</html>

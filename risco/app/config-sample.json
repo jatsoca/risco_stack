@@ -1,0 +1,29 @@
+{
+  "log": "info",
+  "ha_discovery_prefix_topic": "custom_ha_discovery_topic",
+  "panel_name": "Custom panel name",
+  "panel": {
+    "panelIp": "192.168.1.150",
+    "panelPort": 1000,
+    "panelPassword": 1234,
+    "panelId": "0001",
+    "watchDogInterval": 10000
+  },
+  "mqtt": {
+    "url": "mqtt://192.168.1.10:1883",
+    "username": "MQTT_USERNAME",
+    "password": "MQTT_PASSWORD"
+  },
+  "zones": {
+    "default": {
+      "off_delay": 30,
+      "name_prefix": "Sensor - "
+    },
+    "GARAGE": {
+      "off_delay": 0,
+      "device_class": "garage_door",
+      "name": "Garage Door",
+      "name_prefix": ""
+    }
+  }
+}

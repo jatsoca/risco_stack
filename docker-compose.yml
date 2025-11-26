@@ -1,0 +1,29 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+
+  risco:
+    ports:
+      - "8080:8080"  # dashboard/WS
+      - "502:502"    # Modbus TCP
+    build:
+      context: ./risco
+      dockerfile: Dockerfile.risco
+    container_name: risco-mqtt-local
+    depends_on:
+      - mosquitto
+    environment:
+      RISCO_MQTT_HA_CONFIG_FILE: /app/config.json
+    volumes:
+      - ./risco/config.json:/app/config.json:ro
+    restart: unless-stopped
+
+

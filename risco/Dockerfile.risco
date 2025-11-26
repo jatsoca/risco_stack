@@ -1,0 +1,13 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# 1) Copiamos la app ya construida (dist y node_modules incluidos)
+COPY ./app /app
+
+# 2) Aseguramos que el risco-lan-bridge local quede dentro de node_modules
+RUN mkdir -p /app/node_modules/@vanackej
+COPY ./risco-lan-bridge /app/node_modules/@vanackej/risco-lan-bridge
+
+# 3) Ejecutamos la app compilada
+CMD ["node", "dist/main.js"]
