@@ -1,4 +1,4 @@
-// Jaime Acosta jatsoca@gmail.com
+// Jaime Acosta github: jatsoca
 import express from 'express';
 import { Server as HttpServer } from 'http';
 import { WebSocketServer } from 'ws';
