@@ -1,3 +1,5 @@
+# By Jaime Acosta  @jatsoca
+
 # Risco Stack (MQTT + Web + Modbus)
 
 Gateway para paneles Risco LightSYS/LightSYS Plus que expone:
