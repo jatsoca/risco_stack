@@ -1,12 +1,14 @@
-# By JAIME ACOSTA
-#jatsoca
-
 # Risco Stack (MQTT + Web + Modbus)
 
 Gateway para paneles Risco LightSYS/LightSYS Plus que expone:
 - MQTT (descubrimiento Home Assistant, estados de particiones y zonas, comandos).
 - Dashboard web (armar/desarmar, bypass, estados en tiempo real).
 - Modbus TCP (holding/discrete registers con estados y comandos).
+
+## Paneles compatibles (probados en campo)
+- LightSYS / LightSYS Plus (RP432MP). Probado real; puede ampliarse hasta 512 zonas (carga inicial tarda un poco más, pero funciona estable).
+- ProSYS Plus. Probado real.
+- En general, paneles soportados por `@vanackej/risco-lan-bridge` con protocolo local.
 
 ## Estructura
 - `docker-compose.yml` → orquesta mosquitto y la app.
