@@ -140,8 +140,9 @@ export function startWebServer(
         const val = values[i];
         if (regIndex < PARTITION_REGS) {
           const partitionId = regIndex + 1;
-          if (val === 0 || val === 1 || val === 2) {
-            const mode: 'disarm' | 'home' | 'away' = val === 0 ? 'disarm' : val === 1 ? 'home' : 'away';
+          // Solo permitimos 0=disarm, 1=arm away (full). Ignoramos 2 (home) para este proyecto.
+          if (val === 0 || val === 1) {
+            const mode: 'disarm' | 'home' | 'away' = val === 0 ? 'disarm' : 'away';
             const ok = await onArm(partitionId, mode);
             const current = state.partitions.get(partitionId);
             if (!ok && current) writePartition(current);

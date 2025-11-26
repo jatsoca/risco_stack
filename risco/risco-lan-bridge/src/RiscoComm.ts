@@ -342,13 +342,13 @@ export class RiscoComm extends TypedEmitter<RiscoCommEvents> {
 
       }
       case 'RP432MP': {
-        // Tratamos RP432MP como LightSYS Plus de 512 zonas / 32 particiones
-        logger.log('info', 'Detected RP432MP (LightSYS Plus). Forcing 512 zones / 32 partitions.');
+        // Tratamos RP432MP como LightSYS Plus; limitamos a 128 zonas / 32 particiones para agilizar discovery
+        logger.log('info', 'Detected RP432MP (LightSYS Plus). Limiting to 128 zones / 32 partitions for now.');
         return {
           PanelType: panelType,
           PanelModel: 'LightSys Plus (RP432MP)',
           PanelFW: firmwareVersion,
-          MaxZones: 512,
+          MaxZones: 128,
           MaxParts: 32,
           MaxOutputs: 262,       // valor alto y seguro para pruebas
           SupportPirCam: false,

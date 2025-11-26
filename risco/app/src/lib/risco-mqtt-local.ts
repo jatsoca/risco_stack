@@ -665,7 +665,9 @@ export function riscoMqttHomeAssistant(userConfig: RiscoMQTTConfig) {
       }
       logger.info(`Subscribing to panel partitions events`);
       panel.partitions.on('PStatusChanged', (Id, EventStr) => {
-        logger.debug(`[Panel Event] Partition ${Id} => ${EventStr} state=${JSON.stringify(panel.partitions.byId(Id))}`);
+        const p = panel.partitions.byId(Id);
+        const safePartition = p ? { Id: p.Id, Status: p.Status, Ready: p.Ready } : { Id };
+        logger.debug(`[Panel Event] Partition ${Id} => ${EventStr} state=${JSON.stringify(safePartition)}`);
         if (['Armed', 'Disarmed', 'HomeStay', 'HomeDisarmed', 'Alarm', 'StandBy'].includes(EventStr)) {
           publishPartitionStateChanged(panel.partitions.byId(Id));
         }
@@ -675,7 +677,9 @@ export function riscoMqttHomeAssistant(userConfig: RiscoMQTTConfig) {
       });
       logger.info(`Subscribing to panel zones events`);
       panel.zones.on('ZStatusChanged', (Id, EventStr) => {
-        logger.debug(`[Panel Event] Zone ${Id} => ${EventStr} state=${JSON.stringify(panel.zones.byId(Id))}`);
+        const z = panel.zones.byId(Id);
+        const safeZone = z ? { Id: z.Id, Status: z.Status, Open: z.Open, Bypassed: (z as any).Bypassed ?? z.Bypass } : { Id };
+        logger.debug(`[Panel Event] Zone ${Id} => ${EventStr} state=${JSON.stringify(safeZone)}`);
         if (['Closed', 'Open'].includes(EventStr)) {
           publishZoneStateChange(panel.zones.byId(Id), false);
         }
@@ -687,8 +691,10 @@ export function riscoMqttHomeAssistant(userConfig: RiscoMQTTConfig) {
       mqttClient.subscribe(`${config.ha_discovery_prefix_topic}/status`, { qos: 0 }, function(error, granted) {
         if (error) {
           logger.error(`Error subscribing to ${config.ha_discovery_prefix_topic}/status`);
-        } else {
+        } else if (granted && granted.length > 0 && granted[0].topic) {
           logger.info(`${granted[0].topic} was subscribed`);
+        } else {
+          logger.info(`[MQTT] Subscribed to HA status (no granted array returned)`);
         }
       });
       panel.riscoComm.on('Clock', publishOnline);

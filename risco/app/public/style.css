@@ -30,7 +30,7 @@ main {
   padding: 20px;
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
 }
 section {
   background: var(--card);
@@ -62,11 +62,13 @@ table {
   background: var(--table);
   border-radius: 8px;
   overflow: hidden;
+  table-layout: fixed;
 }
 th, td {
   padding: 8px 10px;
   border-bottom: 1px solid #1f2937;
   font-size: 14px;
+  word-break: break-word;
 }
 tr:nth-child(even) td { background: #182032; }
 .badge {
@@ -84,11 +86,33 @@ tr:nth-child(even) td { background: #182032; }
 .bad { background: var(--bad); }
 .accent { background: var(--accent); }
 #zones {
-  max-height: 420px;
+  max-height: 60vh;
   overflow-y: auto;
   display: block;
 }
-#zones table { width: 100%; }
+#zones th:nth-child(1) { width: 46px; }
+#zones th:nth-child(2) { width: 230px; }
+#zones th:nth-child(3) { width: 90px; }
+#zones th:nth-child(4) { width: 90px; }
+#zones th:nth-child(5) { width: 150px; text-align: center; }
+#zones td:last-child { text-align: right; white-space: nowrap; }
+.btn-cell button {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+.info-bar {
+  padding: 0 20px 10px;
+}
+.info-card {
+  background: var(--card);
+  border: 1px solid #1f2937;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  max-width: 1200px;
+}
+.info-card h3 { margin: 0 0 6px; }
+.info-card ul { margin: 6px 0 0 18px; }
 .pill { border-radius: 999px; padding: 4px 10px; font-weight: 600; }
 .open { background: rgba(239, 68, 68, 0.2); color: #fecdd3; }
 .closed { background: rgba(34, 197, 94, 0.2); color: #bbf7d0; }

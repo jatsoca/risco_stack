@@ -12,9 +12,20 @@
     <div id="connection">
       <span id="ws-status" class="badge gray">WS desconectado</span>
       <span id="panel-online" class="badge gray">Panel ?</span>
-      <span id="modbus-info" class="badge gray">Modbus TCP</span>
     </div>
   </header>
+
+  <div class="info-bar">
+    <div class="info-card">
+      <h3>Modbus TCP</h3>
+      <p>Holding registers (read-only):</p>
+      <ul>
+        <li>Particiones regs 1-32 (uint16). 0=disarmed, 1=armed (away), 2=triggered, 3=Ready, 4=NotReady.</li>
+        <li>Zonas regs 33-544 (uint16). 0=cerrada, 1=abierta, 2=bypass.</li>
+        <li>Discrete inputs: bits 0-31 alarmada (1), bits 32-543 zona abierta (1).</li>
+      </ul>
+    </div>
+  </div>
 
   <main>
     <section>
@@ -32,7 +43,6 @@
         <tbody></tbody>
       </table>
     </section>
-
     <section>
       <h2>Zonas</h2>
       <div class="controls">
@@ -45,16 +55,6 @@
         </thead>
         <tbody></tbody>
       </table>
-    </section>
-
-    <section>
-      <h2>Modbus</h2>
-      <p>Holding registers (read-only) via Modbus TCP:</p>
-      <ul>
-        <li>Particiones: regs 1-32 (uint16). 0=disarmed, 1=armed (home/away), 2=triggered, 3=Ready, 4=NotReady.</li>
-        <li>Zonas: regs 33-544 (uint16). 0=cerrada, 1=abierta, 2=bypass.</li>
-        <li>Discrete inputs: bits 0-31 = particiones alarmadas (1), bits 32-543 = zonas abiertas (1).</li>
-      </ul>
     </section>
   </main>
 
