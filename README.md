@@ -25,6 +25,29 @@ Gateway para paneles Risco LightSYS/LightSYS Plus que expone:
 - Docker / Docker Compose.
 - Node 18+ si quieres compilar localmente (opcional).
 
+## Raspberry Pi (preparación e instalación)
+1) Preparar la Pi  
+   - Actualiza paquetes: `sudo apt-get update && sudo apt-get upgrade -y`  
+   - Instala Docker:  
+     ```bash
+     curl -fsSL https://get.docker.com -o get-docker.sh
+     sudo sh get-docker.sh
+     sudo usermod -aG docker $USER  # cierra sesión y vuelve a entrar
+     ```
+   - Instala Docker Compose (plugin): `sudo apt-get install -y docker-compose-plugin`
+   - Opcional: instalar git: `sudo apt-get install -y git`
+
+2) Desplegar el stack  
+   ```bash
+   git clone https://github.com/jatsoca/risco_stack.git
+   cd risco_stack
+   docker compose build risco          # compila la app para ARM
+   docker compose up -d
+   ```
+   Dashboard: http://<IP_Pi>:8080  
+   MQTT: `mqtt://<IP_Pi>:1883`  
+   Modbus TCP: puerto 502.
+
 ## Puesta en marcha (local/Docker)
 1. Desde la raíz del proyecto:  
    ```bash
@@ -61,6 +84,12 @@ npm run build
 - Escritura (holding):
   - Partición reg = 0/1/2 → desarmar/home/away.
   - Zona reg = 2/0 → aplicar/quitar bypass.
+
+## Logs (niveles)
+En `risco/config.json` puedes controlar la verbosidad:
+- `"logLevel": "debug", "log": "debug"` → máximo detalle (tráfico panel/MQTT).
+- `"logLevel": "info", "log": "info"` → operación normal (recomendado).
+- `"logLevel": "none", "log": "none"` → sin salida (modo silencioso).
 
 ## Migrar a otro equipo
 - Opción A (reconstruir): copiar repo y `config.json`, luego `docker compose build --no-cache risco && docker compose up -d`.
